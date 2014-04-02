@@ -14,7 +14,7 @@ ENV LC_ALL     en_US.UTF-8
 # Install the latest postgresql
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3 && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes postgresql-9.2 postgresql-client-9.2 postgresql-contrib-9.2 && \
     /etc/init.d/postgresql stop
 
 # Install other tools.
@@ -25,10 +25,10 @@ RUN DEBIAN_FRONTEND=noninteractive && \
 VOLUME ["/data"]
 
 # Cofigure the database to use our data dir.
-RUN sed -i -e"s/data_directory =.*$/data_directory = '\/data'/" /etc/postgresql/9.3/main/postgresql.conf
+RUN sed -i -e"s/data_directory =.*$/data_directory = '\/data'/" /etc/postgresql/9.2/main/postgresql.conf
 # Allow connections from anywhere.
-RUN sed -i -e"s/^#listen_addresses =.*$/listen_addresses = '*'/" /etc/postgresql/9.3/main/postgresql.conf
-RUN echo "host    all    all    0.0.0.0/0    md5" >> /etc/postgresql/9.3/main/pg_hba.conf
+RUN sed -i -e"s/^#listen_addresses =.*$/listen_addresses = '*'/" /etc/postgresql/9.2/main/postgresql.conf
+RUN echo "host    all    all    0.0.0.0/0    md5" >> /etc/postgresql/9.2/main/pg_hba.conf
 
 EXPOSE 5432
 ADD scripts /scripts
